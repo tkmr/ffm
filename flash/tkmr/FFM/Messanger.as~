@@ -1,0 +1,18 @@
+package tkmr{
+    public class FFMessanger{
+        public function FFMessanger()
+        {
+
+        }
+
+        public function listen(room:String, callback:Function):void
+        {
+
+        }
+
+        public function send(room:String, message:String):void
+        {
+
+        }
+    }
+}

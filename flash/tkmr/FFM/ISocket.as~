@@ -1,0 +1,9 @@
+package tkmr.FFM{
+    public class ISocket{
+        public function ISocket(){ }
+
+        public function connect():void { }
+
+        public function send(room:String, message:String):void { }
+    }
+}
