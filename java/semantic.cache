@@ -1,0 +1,16 @@
+;; Object java/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "java/"
+  :tables (list 
+   (semanticdb-table "UPnPTest.java"
+    :major-mode 'jde-mode
+    :tags '(("tkmr.upnp.*" include nil (dependency-file none) [1 20]) ("java.util.regex.*" include nil (dependency-file none) [21 46]) ("java.net.*" include nil (dependency-file none) [47 65]) ("UPnPTest" type (:typemodifiers ("public") :members (("main" function (:typemodifiers ("public" "static") :arguments (("args" variable (:type "String[]") (reparse-symbol formal_parameters) [118 131])) :type "void") (reparse-symbol class_member_declaration) [94 541])) :type "class") nil [67 543]))
+    :file "UPnPTest.java"
+    :pointmax 543
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0pre3"
+  :semanticdb-version "2.0pre3"
+  )
