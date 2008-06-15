@@ -1,4 +1,4 @@
-import tkmr.upnp.*;
+import ffm.upnp.*;
 import java.util.regex.*;
 import java.net.*;
 
@@ -11,7 +11,8 @@ public class UPnPTest{
 
             SOAPController soapClient = new SOAPController(location);
             System.out.println(soapClient.getRouterURL());
-						
+
+            String externalIP = soapClient.getExternalIP();
         }catch(Exception e){
             System.out.println(e.toString());
         }

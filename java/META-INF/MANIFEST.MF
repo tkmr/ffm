@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Created-By: 1.5.0_13 (Apple Inc.)
+
+Name: ffm/upnp/SOAPController.class
+SHA1-Digest: Nr1aU7C9+4HU9UX66Lq0xh8l3Ys=
+
+Name: ffm/upnp/UDPController$2.class
+SHA1-Digest: t4Erp8/KErAKetkatYTsQSqqge0=
+
+Name: ffm/upnp/Util.class
+SHA1-Digest: pWI4BVncXt42AlsB1yU7ZS3lDg0=
+
+Name: ffm/upnp/UDPController$1.class
+SHA1-Digest: FFEOBixal2x2/LoUHiPpXOsaiPo=
+
+Name: ffm/upnp/UDPController.class
+SHA1-Digest: uMbbStaVXL2pJ+wjPRP/XoFo5yo=
+
+Name: HelloApplet.class
+SHA1-Digest: SGZ9nGCsVZ4jp7md3KBY0vPkbqc=
+

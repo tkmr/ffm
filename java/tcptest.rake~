@@ -1,0 +1,11 @@
+task :default => "TCPTest.jar"
+
+file "TCPTest.jar" => "TCPTest.class" do |t|
+
+end
+
+end
+
+file "TCPTest.class" => "TCPTest.java" do |t|
+  sh "javac #{t.prerequisites[0]}"
+end

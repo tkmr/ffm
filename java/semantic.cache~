@@ -4,9 +4,9 @@
   :tables (list 
    (semanticdb-table "UPnPTest.java"
     :major-mode 'jde-mode
-    :tags '(("tkmr.*" include nil (dependency-file none) [1 15]) ("java.util.regex.*" include nil (dependency-file none) [16 41]) ("java.net.*" include nil (dependency-file none) [42 60]) ("javax.xml.xpath.*" include nil (dependency-file none) [61 86]) ("org.w3c.dom.*" include nil (dependency-file none) [87 108]) ("UPnPTest" type (:typemodifiers ("public") :members (("main" function (:typemodifiers ("public" "static") :arguments (("args" variable (:type "String[]") (reparse-symbol formal_parameters) [161 174])) :type "void") (reparse-symbol class_member_declaration) [137 1554])) :type "class") nil [110 1556]))
+    :tags '(("ffm.upnp.*" include nil (dependency-file none) [1 19]) ("java.util.regex.*" include nil (dependency-file none) [20 45]) ("java.net.*" include nil (dependency-file none) [46 64]) ("UPnPTest" type (:typemodifiers ("public") :members (("main" function (:typemodifiers ("public" "static") :arguments (("args" variable (:type "String[]") (reparse-symbol formal_parameters) [117 130])) :type "void") (reparse-symbol class_member_declaration) [93 594])) :type "class") nil [66 596]))
     :file "UPnPTest.java"
-    :pointmax 1556
+    :pointmax 596
     :unmatched-syntax 'nil
     )
    )

@@ -1,0 +1,10 @@
+task :default => "TCPTest.jar"
+
+file "TCPTest.jar" => "TCPTest.class" do |t|
+  sh "jar cf #{t.name} #{t.prerequisites[0]}"
+  sh "jarsigner #{t.name} tatsuya"
+end
+
+file "TCPTest.class" => "TCPTest.java" do |t|
+  sh "javac #{t.prerequisites[0]}"
+end

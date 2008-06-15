@@ -1,0 +1,21 @@
+package ffm;
+import netscape.javascript.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+public class FFMApplet extends Applet{
+    private static final long serialVersionUID = 1L;
+    public void init(){
+        keyEv keyEv1 = new keyEv();
+        TextArea textArea1  = new TextArea();
+        textArea1.getCaretPosition();
+        textArea1.addKeyListener(keyEv1);
+        this.add(textArea1);
+    }
+
+    public void changeText(String s){
+        TextArea t = (TextArea) this.getComponents()[0];
+        t.setText(s);
+    }
+}

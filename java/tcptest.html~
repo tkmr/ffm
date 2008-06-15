@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+    <title>TCPTest</title>
+    <script type="text/javascript">
+      logFromJava = function(s){
+        alert(s);
+      }
+    </script>
+  </head>
+  <body>
+    <h4>TCPTest</h4>
+    <object codetype="application/java" type="application/x-java-applet" classid="java:TCPTest" width="300" height="200">
+      <PARAM NAME="cache_option" VALUE="false" />
+      <PARAM NAME="cache_archive" VALUE="plugin.jar, TCPTest.jar" />
+      <PARAM NAME="cache_version" VALUE="0.0.0.2, 0.0.1.2" />
+      <PARAM name="codebase" value="." />
+      <PARAM name="type" value="application/x-java-applet;jpi-version=1.5.0" />
+      <PARAM name="scriptable" value="false" />
+      No Way
+    </object>
+  </body>
+</html>

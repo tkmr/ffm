@@ -1,0 +1,23 @@
+Signature-Version: 1.0
+Created-By: 1.5.0_13 (Apple Inc.)
+SHA1-Digest-Manifest-Main-Attributes: j9eyEGiURou8vn9n7bK2SH6lzzI=
+SHA1-Digest-Manifest: I0r5BoCoiORB2T9CNIAbnc1r5qs=
+
+Name: ffm/upnp/SOAPController.class
+SHA1-Digest: WRMdbpzXavTEaqM7IbE+ykGYa9k=
+
+Name: ffm/upnp/UDPController$2.class
+SHA1-Digest: 1S4m1yeYjBljEO7IcTyCge1G6uI=
+
+Name: ffm/upnp/UDPController$1.class
+SHA1-Digest: 9g6XwutwWYPWMj3Efdg+EbLOUtE=
+
+Name: ffm/upnp/Util.class
+SHA1-Digest: cuQeCuS4+G0XaWMw08BYQM2AZVY=
+
+Name: ffm/upnp/UDPController.class
+SHA1-Digest: QUNJIWUOt2yvAcBk0MpdHcd9v44=
+
+Name: HelloApplet.class
+SHA1-Digest: 2lS1vX2zU0J+gfzWG9S7yVjeNd0=
+

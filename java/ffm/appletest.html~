@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>AppletTest</title>
+    </head>
+  <body>
+    <h4>AppletTest</h4>
+    <applet height=50 width=200 code="FFMApplet.class"></applet>
+  </body>
+</html>
