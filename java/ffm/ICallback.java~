@@ -1,0 +1,3 @@
+public interface ICallbac{
+    void call(String result);
+}

@@ -28,8 +28,10 @@ public class SOAPController{
         routerURL = discoverControlURL(routerLocation);
     }
 
-    public String getExternalIP() throws ServiceException, RemoteException
+    public String getExternalIP() throws IOException, ProtocolException, MalformedURLException
     {
+        /*
+          //javax.xml.rpc 関連のクラスを探すのが面倒なので
         Service soapService = ServiceFactory.newInstance().createService(new QName(SSDP_ST_SERVICE, "GetExternalIPAddress"));
         Call call = soapService.createCall();
         call.setOperationName(new QName(SSDP_ST_SERVICE, "GetExternalIPAddress"));
@@ -37,19 +39,56 @@ public class SOAPController{
         call.setProperty(Call.ENCODINGSTYLE_URI_PROPERTY, "http://schemas.xmlsoap.org/soap/encoding/");
         call.setTargetEndpointAddress(routerURL);
         Object[] args = {};
+        String ystem.out.println(call.invoke(args));
+        */
 
-        System.out.println(call.invoke(args));
+        String soapHeader = SSDP_ST_SERVICE + "#GetExternalIPAddress Host: " + InetAddress.getLocalHost().getHostAddress().toString();
+        String postMessage = "<?xml version=\"1.0\"?>" +
+            "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" +
+            "<SOAP-ENV:Body><m:GetExternalIPAddress xmlns:m=\"urn:schemas-upnp-org:service:WANPPPConnection:1\"></m:GetExternalIPAddress></SOAP-ENV:Body>" +
+            "</SOAP-ENV:Envelope>";
 
-        //call.addParameter(
-        //                  "isbn",             // parameter name
-        //                  XMLType.XSD_STRING, // parameter XML type QName
-        //                  String.class,       // parameter Java type class
-        //                  ParameterMode.IN);  // parameter mode
-        // The return
-        //call.setReturnType(XMLType.XSD_FLOAT);
-        // The operation is an RPC-style operation.
+        System.out.println(routerURL);
+        URL reqUrl = new URL(routerURL);
+        HttpURLConnection con = (HttpURLConnection)reqUrl.openConnection();
+        String result;
 
-        return "";
+        try{
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setUseCaches(false);
+
+            byte[] bytes = postMessage.getBytes();
+            con.addRequestProperty("SoapAction", soapHeader);
+            con.addRequestProperty("Content-Length", ""+bytes.length);
+
+            //BufferedWriter output = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
+            //output.write(postMessage);
+            //output.flush();
+
+            Util.writeChunked(con.getOutputStream(), bytes);
+            con.getOutputStream().close();
+
+            con.connect();
+
+            System.out.println(soapHeader);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            System.out.println(soapHeader);
+
+            String tmpLine;
+            StringBuilder body = new StringBuilder();
+            while((tmpLine = reader.readLine()) != null){
+                body.append(tmpLine);
+            }
+            result = body.toString();
+            reader.close();
+        }finally{
+            con.disconnect();
+        }
+
+        System.out.println(result);
+        return result;
     }
 
     public String discoverControlURL(String location) throws XPathExpressionException, MalformedURLException, IOException, SAXException

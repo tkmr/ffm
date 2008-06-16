@@ -1,0 +1,17 @@
+package ffm.js;
+
+public class JSCallback implements ICallback{
+    private String jsfunc;
+
+    public JSCallback(String jsfunc){
+        this.jsfunc = jsfunc;
+    }
+
+    public void call(String result){
+        JSObject win = JSObject.getWindow((Applet)this);
+        Object[] arg = new Object[1];
+        arg[0] = result;
+        win.call(name, arg);
+        return;
+    }
+}
