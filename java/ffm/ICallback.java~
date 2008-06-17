@@ -1,3 +1,4 @@
-public interface ICallbac{
-    void call(String result);
+package ffm;
+public interface ICallback{
+    String call(String result);
 }

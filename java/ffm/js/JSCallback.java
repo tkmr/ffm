@@ -13,10 +13,14 @@ public class JSCallback implements ICallback{
     }
 
     public String call(String result){
+        return this.call(result, this.jsfunc);
+    }
+
+    public String call(String result, String func){
         JSObject win = JSObject.getWindow(this.applet);
         Object[] arg = new Object[1];
         arg[0] = result;
-        Object jsResult = win.call(this.jsfunc, arg);
+        Object jsResult = win.call(func, arg);
         if(jsResult != null){
             return (String) jsResult;
         }else{

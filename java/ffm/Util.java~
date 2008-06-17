@@ -1,0 +1,13 @@
+package ffm;
+
+public class Util
+{
+    static public joinArray(String[] args)
+    {
+        String request = "";
+        for(int i = 0; i < requests.length; i++){
+            request += requests[i] + "\r\n";
+        }
+        return request;
+    }
+}
