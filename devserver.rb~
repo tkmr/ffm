@@ -1,0 +1,7 @@
+require "webrick"
+
+port = ARGV[1] || 80
+server = WEBrick::HTTPServer.new({:DocumentRoot => ".",
+                                  :BindAddress => "127.0.0.1",
+                                  :Port => port})
+server.start
