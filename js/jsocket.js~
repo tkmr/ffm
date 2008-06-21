@@ -1,0 +1,80 @@
+var ffm = ffm||{};
+
+(function(ffm){
+  ////////////////////////////////////////////////////////////////
+  /*
+   * Configulation
+   */
+  ffm.Config = {
+    defaultTimeout: 5000
+  }
+
+  ffm.Temp = {};
+
+  ////////////////////////////////////////////////////////////////
+  /*
+   * Socket class
+   */
+  ffm.BaseSocket = function(applet, port){
+  }
+  ffm.BaseSocket.prototype.connect = function(host, timeout){
+    timeout = timeout || ffm.Config.defaultTimeout;
+    this.socket.connect(host, timeout);
+  }
+  ffm.BaseSocket.prototype.write = function(request){
+    this.socket.write(request);
+  }
+  ffm.BaseSocket.prototype.read = function(){
+    return this.socket.read();
+  }
+  ffm.BaseSocket.prototype.close = function(){
+    this.socket.close();
+  }
+
+
+  ffm.TCPSocket = function(applet, port){
+    this.applet = applet;
+    this.socket = applet.createTCPSocket(port);
+  }
+  ffm.TCPSocket.prototype = ffm.BaseSocket.prototype;
+
+
+  //////////////////////////////////////////////////////////////
+  /*
+   * Socket request class
+   */
+  ffm.SocketRequest = function(javasocket){
+    this.javarequester = jsocket.applet.createSocketRequest(javasocket);
+  }
+  ffm.SocketRequest.prototype.request = function(host, options){
+    var timeout = options.timeout || ffm.Config.defaultTimeout;
+    if(typeof(options.success) === "function"){
+      options.fail = options.fail || (function(){});
+      var successTempName = "temporallyfunction";
+      window[successTempName] = options.success;
+      try{
+        return this.javarequester.asyncRequest(host, options.request, timeout, successTempName);
+      }catch(e){
+        options.fail();
+      }
+    }else{
+      return this.javarequester.request(host, options.request, timeout);
+    }
+  }
+
+  ffm.HTTPRequest = function(socketRequest){
+    this.requester = socketRequest;
+  }
+  ffm.HTTPRequest.prototype.get = function(url, options){
+    var timeout = options.timeout || ffm.Config.defaultTimeout;
+    var match = url.match(new RegExp("https?://([^/]*)(.*)"));
+    var host = match[1];
+    var path = match[2];
+    options.request = ["GET "+path+" HTTP/1.1", "host: "+host];
+    return this.requester.request(host, options);
+  }
+  ffm.HTTPRequest.prototype.post = function(url, options){
+
+  }
+
+})(ffm);

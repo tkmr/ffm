@@ -46,6 +46,7 @@ public class TCPSocket implements ISocket
         String result = "";
         String line;
         while ((line = this.in.readLine()) != null) {
+            System.out.println(line);
             result += line;
         }
         return result;

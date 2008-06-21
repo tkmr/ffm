@@ -9,10 +9,23 @@ import ffm.js.*;
 import ffm.socket.*;
 
 public class TCPTest extends Applet {
+
     public void init(){
-        System.setProperty("java.security.policy", "http://localhost:8888/test.policy");
+        System.setProperty("java.security.policy", "http://myhost.com:8888/test.policy");
     }
 
+    public TCPSocket createTCPSocket(int port)
+    {
+        return new TCPSocket(port);
+    }
+
+    public JSSocket createSocketRequest(ISocket socket)
+    {
+        ICallback callback = new JSCallback("temp", (Applet)this);
+        return new SocketRequest(socket, callback);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
     public String echo(String req)
     {
         return req;
@@ -39,4 +52,5 @@ public class TCPTest extends Applet {
         JSCallback callback = new JSCallback(jscallback, (Applet)this);
         new TCPListenThread(port, callback).start();
     }
+
 }

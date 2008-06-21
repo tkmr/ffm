@@ -11,34 +11,7 @@ import ffm.socket.*;
 public class TCPTest extends Applet {
 
     public void init(){
-        System.setProperty("java.security.policy", "http://localhost:8888/test.policy");
-    }
-
-    public String echo(String req)
-    {
-        return req;
-    }
-
-    public String requestHTTP(String host, String path)
-    {
-        String message = "GET "+path+" HTTP/1.1\r\nHost: "+host+"\r\nConnection: close\r\n\r\n";
-        TCPRequest tcp = new TCPRequest(host, 80, 3000);
-        String result = tcp.request(message);
-        return result;
-    }
-
-    public void requestHTTPAsync(String host, String path, String jscallback)
-    {
-        String message = "GET "+path+" HTTP/1.1\r\nHost: "+host+"\r\nConnection: close\r\n\r\n";
-        JSCallback callback = new JSCallback(jscallback, (Applet)this);
-        TCPRequest tcp = new TCPRequest(host, 80, 3000);
-        new TCPRequestThread(tcp, message, callback).start();
-    }
-
-    public void listenTCP(int port, String jscallback)
-    {
-        JSCallback callback = new JSCallback(jscallback, (Applet)this);
-        new TCPListenThread(port, callback).start();
+        System.setProperty("java.security.policy", "http://myhost.com:8888/test.policy");
     }
 
     public TCPSocket createTCPSocket(int port)
@@ -46,11 +19,14 @@ public class TCPTest extends Applet {
         return new TCPSocket(port);
     }
 
-    public JSSocket createJSSocket(int port)
+    public SocketRequest createSocketRequest(ISocket socket)
     {
         ICallback callback = new JSCallback("temp", (Applet)this);
-        ISocket socket = new TCPSocket(port);
-        return new JSSocket(socket, callback);
+        return new SocketRequest(socket, callback);
     }
 
+    public String echo(String req)
+    {
+        return req;
+    }
 }

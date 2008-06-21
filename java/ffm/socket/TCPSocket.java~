@@ -3,41 +3,62 @@ import ffm.*;
 import java.net.*;
 import java.io.*;
 
-public class TCPSocket extends java.net.Socket
+public class TCPSocket implements ISocket
 {
     public BufferedWriter out;
     public BufferedReader in;
     public int port;
+    public Socket socket;
 
     public TCPSocket(int port)
     {
         this.port = port;
+        this.socket = new Socket();
     }
 
-    public String connect(String host, int timeout)
+    public void connect(String host, int timeout) throws IOException, SocketException
     {
-        try{
-            InetSocketAddress address = new InetSocketAddress(host, this.port);
-            socket.connect(address, this.timeout);
-            socket.setSoTimeout(this.timeout);
+        InetSocketAddress address = new InetSocketAddress(host, this.port);
+        this.socket.connect(address, timeout);
+        this.socket.setSoTimeout(timeout);
 
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out.write(request);
-            out.flush();
-
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-
-            out.close();
-            in.close();
-            socket.close();
-        } catch(Exception e){
-        }
+        this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+        this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
 
+    public void write(String[] requests) throws IOException
+    {
+        String request = "";
+        for(int i = 0; i < requests.length; i++){
+            request += requests[i] + "\r\n";
+        }
+        this.write(request);
+    }
+
+    public void write(String request) throws IOException
+    {
+        this.out.write(request);
+        this.out.flush();
+    }
+
+    public String read() throws IOException
+    {
+        String result = "";
+        String line;
+        while ((line = this.in.readLine()) != null) {
+            result += line;
+        }
+        return result;
+    }
+
+    public void close() throws IOException
+    {
+        this.out.close();
+        this.in.close();
+        this.socket.close();
+    }
+
+    /*
     public void listen()
     {
         try{
@@ -59,4 +80,5 @@ public class TCPSocket extends java.net.Socket
             e.printStackTrace();
         }
     }
+    */
 }
