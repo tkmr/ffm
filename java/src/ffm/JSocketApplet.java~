@@ -1,3 +1,4 @@
+package "ffm";
 import java.net.*;
 import java.io.*;
 import netscape.javascript.*;
@@ -8,9 +9,10 @@ import ffm.*;
 import ffm.js.*;
 import ffm.socket.*;
 
-public class TCPTest extends Applet {
-
-    public void init(){
+public class JSocketApplet extends Applet
+{
+    public void init()
+    {
         System.setProperty("java.security.policy", "http://myhost.com:8888/test.policy");
     }
 
@@ -29,5 +31,4 @@ public class TCPTest extends Applet {
     {
         return req;
     }
-
 }

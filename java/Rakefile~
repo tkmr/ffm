@@ -1,5 +1,6 @@
 task :default => "lib/jssocket.jar"
 
+JRUBY_HOME = "/usr/local/jruby-1.1.2"
 SIGN = "tatsuya"
 SRC = FileList["src/*.java", "src/ffm/*.java", "src/ffm/socket/*.java", "src/ffm/upnp/*.java", "src/ffm/js/*.java"]
 OBJ = FileList["classes/ffm/JSocketApplet.class", "classes/ffm/*.class", "classes/ffm/socket/*.class", "classes/ffm/upnp/*.class", "classes/ffm/js/*.class"]
@@ -9,6 +10,7 @@ rule '.class' => [proc {|tn| tn.sub(/\.class$/, '.java').sub(/^classes\//, 'src/
 end
 
 file "lib/jssocket.jar" => OBJ do |t|
+  ##sh "jar cvf #{t.name} #{OBJ}"
   sh "jar cf #{t.name} -C classes/ ."
   sh "jarsigner #{t.name} #{SIGN}"
 end
@@ -16,5 +18,6 @@ end
 file "classes/JSocketApplet.class" => FileList["classes/ffm/*.class", "classes/ffm/socket/*.class", "classes/ffm/upnp/*.class", "classes/ffm/js/*.class"]
 
 task "spec" =>"lib/jssocket.jar" do
-  sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec spec/JSocketApplet_spec.rb"
+  ##sh "CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec -c -fs MyClass_spec.rb"
+  sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby #{JRUBY_HOME}/bin/spec spec/JSocketApplet_spec.rb"
 end
