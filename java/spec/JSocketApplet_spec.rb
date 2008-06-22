@@ -2,7 +2,7 @@ require 'java'
 require 'lib/jssocket.jar'
 require 'spec/spec_base'
 
-describe FFM::JSocketApplet, "Spec of JSocketApplet" do
+describe FFM::JSocketApplet do
   before do
     @applet = FFM::JSocketApplet.new()
   end

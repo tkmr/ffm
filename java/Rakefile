@@ -16,7 +16,9 @@ end
 file "classes/JSocketApplet.class" => FileList["classes/ffm/*.class", "classes/ffm/socket/*.class", "classes/ffm/upnp/*.class", "classes/ffm/js/*.class"]
 
 task "spec" =>"lib/jssocket.jar" do
-  sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec spec/JSocketApplet_spec.rb"
+  Dir::glob("spec/*.rb") do |f|
+    sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec #{f}"
+  end
 end
 
 task "commit" do
