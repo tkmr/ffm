@@ -1,12 +1,6 @@
 require 'java'
 require 'lib/jssocket.jar'
-
-module FFM
-  include_package "ffm"
-  include_package "ffm.js"
-  include_package "ffm.socket"
-  include_package "ffm.upnp"
-end
+require 'spec/spec_base'
 
 describe FFM::JSocketApplet, "Spec of JSocketApplet" do
   before do
@@ -17,9 +11,19 @@ describe FFM::JSocketApplet, "Spec of JSocketApplet" do
     @applet.echo("Hello world").should eql "Hello world"
   end
 
-#  it "createTCPSocket method return a ffm.socket.TCPSocket class instance" do
-#    socket = @applet.createTCPSocket(8888)
-#    socket.getClass().getName().should eql "ffm.socket.TCPSocket"
-#  end
+  it "createTCPSocket method return a ffm.socket.TCPSocket class instance" do
+    socket = @applet.createTCPSocket(8888)
+    socket.getClass().getName().should eql "ffm.socket.TCPSocket"
+    socket.class.should eql FFM::Socket::TCPSocket
+    socket.port.should eql 8888
+  end
 
+  it "createSocketRequest method return a ffm.socket.SocketRequest class instance" do
+    socket = @applet.createTCPSocket(8888)
+    request = @applet.createSocketRequest(socket)
+
+    request.class.should eql FFM::Socket::SocketRequest
+    request.socket.class.should eql FFM::Socket::TCPSocket
+    request.socket.port.should eql 8888
+  end
 end

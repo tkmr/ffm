@@ -18,3 +18,9 @@ file "classes/JSocketApplet.class" => FileList["classes/ffm/*.class", "classes/f
 task "spec" =>"lib/jssocket.jar" do
   sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec spec/JSocketApplet_spec.rb"
 end
+
+task "commit" do
+  sh "find . -name \\*~ | xargs rm"
+  sh "git add ."
+  sh "git commit -a"
+end
