@@ -61,6 +61,13 @@ var ffm = ffm||{};
     options.fail    = options.fail || (function(){});
     options.timeout = options.timeout || ffm.Config.defaultTimeout;
     options.request = options.request || "";
+    if(typeof(options.request) !== "string"){
+      var request = java.lang.reflect.Array.newInstance(java.lang.String, options.request.length);
+      for(var i=0; i < options.request.length; i++){
+        request[i] = options.request[i];
+      }
+      options.request = request;
+    }
     if(typeof(options.success) === "function"){
       var successTempName = "jsocket_temp_function_" + Math.floor(Math.random() * 1000000000).toString();
       window[successTempName] = options.success;
@@ -95,7 +102,7 @@ var ffm = ffm||{};
                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                        "Accept-Language: ja,en-us;q=0.7,en;q=0.3",
                        "Accept-Charset: Shift_JIS,utf-8;q=0.7,*;q=0.7",
-                       ""];
+                       "", ""];
     if(typeof(options.body) !== "undefined"){
       options.request.push(options.body);
     }

@@ -28,7 +28,7 @@ public class SocketRequest
     }
     public String request(String request) throws IOException, SocketException
     {
-        String result;
+        String result = "";
         try{
             this.socket.write(request);
             result = this.socket.read();
@@ -48,6 +48,6 @@ public class SocketRequest
     public void asyncRequest(String host, String request, int timeout, String callback) throws IOException, SocketException
     {
         this.socket.connect(host, timeout);
-        new ffm.js.SocketRequestThread(this, request, callback).start();
+        new SocketRequestThread(this, request, callback).start();
     }
 }

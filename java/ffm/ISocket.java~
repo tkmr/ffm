@@ -1,8 +1,0 @@
-package ffm;
-public interface ISocket{
-    void connect(String host, int timeout);
-    void write(String request);
-    void write(String[] requests);
-    String read();
-    void close();
-}

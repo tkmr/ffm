@@ -3,18 +3,18 @@ import ffm.*;
 import java.net.*;
 import java.io.*;
 
-public class TCPListenSubThread extends Thread
+public class SocketListenSubThread extends Thread
 {
     private ICallback callback;
-    private Socket socket;
-    public TCPListenSubThread(Socket socket, ICallback callback)
+    private ISocket socket;
+    public SocketListenSubThread(ISocket socket, ICallback callback)
     {
         this.socket = socket;
         this.callback = callback;
     }
 
     public void run(){
-        TCPListener listener = new TCPListener(socket, callback);
+        SocketListener listener = new SocketListener(this.socket, this.callback);
         listener.listen();
     }
 }

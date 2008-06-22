@@ -2,16 +2,16 @@ task :default => "TCPTest.jar"
 
 SIGN = "tatsuya"
 SRC = FileList["TCPTest.java", "ffm/*.java", "ffm/socket/*.java", "ffm/upnp/*.java", "ffm/js/*.java"]
-OBJ = SRC.ext('class')
+OBJ = FileList["classes/TCPTest.class", "classes/ffm/*.class", "classes/ffm/socket/*.class", "classes/ffm/upnp/*.class", "classes/ffm/js/*.class"]
 
-rule '.class' => '.java' do |t|
-  sh "javac #{t.source}"
+rule '.class' => [proc {|tn| tn.sub(/\.class$/, '.java').sub(/^classes\//, '') }] do |t|
+  sh "javac -d ./classes #{t.source}"
 end
 
 file "TCPTest.jar" => OBJ do |t|
-  sh "jar cf #{t.name} #{OBJ}"
+  ##sh "jar cvf #{t.name} #{OBJ}"
+  sh "jar cf #{t.name} -C classes/ ."
   sh "jarsigner #{t.name} #{SIGN}"
 end
 
-file "TCPTest.class" => FileList["ffm/socket/*.class", "ffm/js/*.class", "ffm/*.class"]
-
+file "classes/TCPTest.class" => FileList["classes/ffm/*.class", "classes/ffm/socket/*.class", "classes/ffm/upnp/*.class", "classes/ffm/js/*.class"]
