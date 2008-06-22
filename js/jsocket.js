@@ -102,6 +102,7 @@ var ffm = ffm||{};
                        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                        "Accept-Language: ja,en-us;q=0.7,en;q=0.3",
                        "Accept-Charset: Shift_JIS,utf-8;q=0.7,*;q=0.7",
+                       "Connection: close",
                        "", ""];
     if(typeof(options.body) !== "undefined"){
       options.request.push(options.body);

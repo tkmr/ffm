@@ -9,7 +9,7 @@
   </head>
   <body>
     <h4 id="t">TCPTest</h4>
-    <object id="applet" name="applet" codetype="application/java" type="application/x-java-applet" classid="java:JSocketApplet" width="300" height="200">
+    <object id="applet" name="applet" codetype="application/java" type="application/x-java-applet" classid="java:ffm.JSocketApplet" width="300" height="200">
       <PARAM NAME="cache_option" VALUE="false" />
       <PARAM NAME="cache_archive" VALUE="lib/plugin.jar, lib/jssocket.jar" />
       <PARAM NAME="cache_version" VALUE="0.0.0.2, 0.0.4.9" />
