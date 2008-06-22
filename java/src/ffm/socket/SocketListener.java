@@ -1,4 +1,4 @@
-package ffm.js;
+package ffm.socket;
 import ffm.*;
 import java.net.*;
 import java.io.*;
@@ -27,5 +27,4 @@ public class SocketListener
             } catch (IOException e) {}
         }
     }
-
 }

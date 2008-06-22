@@ -36,6 +36,12 @@ public class TCPSocket implements ISocket
 
     public void setIO() throws IOException
     {
+        /*
+         * TODO : Redesign //////////////////////////////////////////////////////////////////////
+         * Bufferd?
+         * Print?
+         * real time?
+         */
         this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
@@ -58,16 +64,27 @@ public class TCPSocket implements ISocket
     }
     public String read(ICallback callback) throws IOException
     {
+        /*
+         *
+         * TODO: Redesign //////////////////////////////////////////////////////////////////////
+         * read() //real time
+         * readLine()
+         * read([], in, max);
+         * readAll()
+         * read(ICallback)
+         *
+         */
         String result = "";
         String line;
         String callback_result;
         boolean isEndRead = false;
-        while (((line = this.in.readLine()) != null) && !isEndRead) {
+        while (!isEndRead && ((line = this.in.readLine()) != null)) {
             System.out.println(line);
             if(callback != null){
                 callback_result = callback.call(line);
-                if(callback_result == "END"){
+                if(callback_result.equals("END")){
                     isEndRead = true;
+                    System.out.println("End of read");
                 }else{
                     this.write(callback_result);
                 }

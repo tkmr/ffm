@@ -7,6 +7,7 @@ public interface ISocket{
     void write(String request) throws IOException;
     void write(String[] requests) throws IOException;
     String read() throws IOException;
+    String read(ICallback callback) throws IOException;
     void close() throws IOException;
     ISocket generate(Object rawsocket) throws IOException;
 }

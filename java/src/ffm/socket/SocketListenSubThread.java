@@ -15,7 +15,7 @@ public class SocketListenSubThread extends Thread
 
     public void run(){
         try{
-            SocketListener listener = new SocketListener(this.socket, this.callback);
+            ffm.socket.SocketListener listener = new ffm.socket.SocketListener(this.socket, this.callback);
             listener.listen();
         } catch(Exception e){
             e.printStackTrace();

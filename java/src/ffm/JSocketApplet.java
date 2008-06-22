@@ -27,6 +27,13 @@ public class JSocketApplet extends Applet
         return new SocketRequest(socket, callback);
     }
 
+    public void createSocketListenThread(int port, ISocket socket, String listenFunc, String threadFunc)
+    {
+        ICallback listenCallback = new JSCallback(listenFunc, (Applet)this);
+        ICallback threadCallback = new JSCallback(threadFunc, (Applet)this);
+        SocketListenThread.generate(port, socket, listenCallback, threadCallback).start();
+    }
+
     public String echo(String req)
     {
         return req;

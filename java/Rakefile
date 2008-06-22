@@ -5,6 +5,9 @@ SRC = FileList["src/*.java", "src/ffm/*.java", "src/ffm/socket/*.java", "src/ffm
 OBJ = FileList["classes/ffm/JSocketApplet.class",
                "classes/ffm/*.class",
                "classes/ffm/socket/TCPSocket.class",
+               "classes/ffm/socket/SocketListenThread.class",
+               "classes/ffm/socket/SocketListenSubThread.class",
+               "classes/ffm/socket/SocketListener.class",
                "classes/ffm/socket/*.class",
                "classes/ffm/upnp/*.class",
                "classes/ffm/js/*.class"]
