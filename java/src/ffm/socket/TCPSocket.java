@@ -2,6 +2,7 @@ package ffm.socket;
 import ffm.*;
 import java.net.*;
 import java.io.*;
+import java.util.regex.*;
 
 public class TCPSocket implements ISocket
 {
@@ -71,8 +72,11 @@ public class TCPSocket implements ISocket
                     this.write(callback_result);
                 }
             }
-            result += line;
+            result += line + "\uf8f8";
         }
+        //Pattern pattern = Pattern.compile("\n");
+        //Matcher matcher = pattern.matcher(result);
+        //result = matcher.replaceAll("\uf8f8");
         return result;
     }
 
