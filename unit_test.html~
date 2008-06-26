@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>jssocket.js unit test</title>
-    <link rel="stylesheet" href="testsuite.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/testsuite.css" type="text/css" media="screen" />
     <script type="text/javascript" src="js/lib/jquery-1.2.6.min.js"></script>
     <script type="text/javascript" src="js/lib/testrunner.js"></script>
     <!-- my libraly start -->
