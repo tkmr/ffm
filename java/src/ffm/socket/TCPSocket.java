@@ -36,16 +36,18 @@ public class TCPSocket implements ISocket
 
     public void setIO() throws IOException
     {
-        /*
-         * TODO : Redesign //////////////////////////////////////////////////////////////////////
-         * Bufferd?
-         * Print?
-         * real time?
-         */
         this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
 
+    public void close() throws IOException
+    {
+        this.out.close();
+        this.in.close();
+        this.socket.close();
+    }
+
+    //Write //////////////////////////////////////////////////////////////////////////////////
     public void write(String[] requests) throws IOException
     {
         String request = Util.joinArray(requests);
@@ -58,49 +60,33 @@ public class TCPSocket implements ISocket
         this.out.flush();
     }
 
-    public String read() throws IOException
+    //Read //////////////////////////////////////////////////////////////////////////////////
+    public String readAll() throws IOException
     {
-        return this.read(null);
-    }
-    public String read(ICallback callback) throws IOException
-    {
-        /*
-         *
-         * TODO: Redesign //////////////////////////////////////////////////////////////////////
-         * read() //real time
-         * readLine()
-         * read([], in, max);
-         * readAll()
-         * read(ICallback)
-         *
-         */
         String result = "";
         String line;
-        String callback_result;
-        boolean isEndRead = false;
-        while (!isEndRead && ((line = this.in.readLine()) != null)) {
-            System.out.println(line);
-            if(callback != null){
-                callback_result = callback.call(line);
-                if(callback_result.equals("END")){
-                    isEndRead = true;
-                    System.out.println("End of read");
-                }else{
-                    this.write(callback_result);
-                }
-            }
-            result += line + "\uf8f8";
+        while ((line = this.in.readLine()) != null) {
+            //result += line + "\uf8f8";
+            result += line + "\r\n";
         }
-        //Pattern pattern = Pattern.compile("\n");
-        //Matcher matcher = pattern.matcher(result);
-        //result = matcher.replaceAll("\uf8f8");
         return result;
     }
 
-    public void close() throws IOException
+    public String readLine() throws IOException
     {
-        this.out.close();
-        this.in.close();
-        this.socket.close();
+        return this.in.readLine();
+    }
+
+    public char read() throws IOException
+    {
+        return (char)this.in.read();
+    }
+
+    public String read(int length) throws IOException
+    {
+        char[] result = new char[length];
+        int size = this.in.read(result, 0, length);
+        String results = new String(result);
+        return results;
     }
 }
