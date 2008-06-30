@@ -16,28 +16,40 @@ public class SocketRequest
         this.callback = callback;
     }
 
-    public String request(String host, String request, int timeout) throws IOException, SocketException
-    {
-        this.socket.connect(host, timeout);
-        return this.request(request);
-    }
-    public String request(String request) throws IOException, SocketException
+    public String simpleRequest(String host, String request, int timeout) throws IOException, SocketException, Exception
     {
         String result = "";
         try{
+            this.socket.connect(host, timeout);
             this.socket.write(request);
             result = this.socket.readAll();
         }catch(Exception e){
-            e.printStackTrace();
-        }finally{
             this.socket.close();
+            throw e;
         }
         return result;
     }
 
-    public void asyncRequest(String host, String request, int timeout, String lastCallback, String updateCallback) throws IOException, SocketException
+    public void asyncSimpleRequest(String host, String request, int timeout, String lastCallback) throws IOException, SocketException, Exception
     {
-        this.socket.connect(host, timeout);
-        new SocketRequestThread(this, request, lastCallback, updateCallback).start();
+        try{
+            this.socket.connect(host, timeout);
+            this.socket.write(request);
+        }catch(Exception e){
+            this.socket.close();
+            throw e;
+        }
+        new SocketSimpleRequestThread(this, lastCallback).start();
+    }
+
+    public void asyncInteractRequest(String host, int timeout, String lastCallback, String updateCallback) throws IOException, SocketException, Exception
+    {
+        try{
+            this.socket.connect(host, timeout);
+        }catch(Exception e){
+            this.socket.close();
+            throw e;
+        }
+        new SocketInteractRequestThread(this, lastCallback, updateCallback).start();
     }
 }

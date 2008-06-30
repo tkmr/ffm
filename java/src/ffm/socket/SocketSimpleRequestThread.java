@@ -3,23 +3,19 @@ import ffm.*;
 import java.net.*;
 import java.io.*;
 
-public class SocketRequestThread extends Thread{
-    private String message;
+public class SocketSimpleRequestThread extends Thread{
     private String lastCallbackName;
-    private String updateCallbackName;
     private SocketRequest socket;
 
-    public SocketRequestThread(SocketRequest socket, String message, String lastCallback, String updateCallback){
-        this.message = message;
+    public SocketSimpleRequestThread(SocketRequest socket, String lastCallback){
         this.socket = socket;
         this.lastCallbackName = lastCallback;
-        this.updateCallbackName = updateCallback;
     }
 
     public void run()
     {
         try{
-            String result = this.socket.request(message);
+            String result = this.socket.socket.readAll();
             String jsResult = this.socket.callback.call(result, this.lastCallbackName);
         }catch(Exception exp){
             //String jsReqult = this.socket.callback.call(exp.toString(), this.callback);
