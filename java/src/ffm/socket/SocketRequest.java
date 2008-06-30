@@ -16,11 +16,6 @@ public class SocketRequest
         this.callback = callback;
     }
 
-    public String request(String host, String[] requests, int timeout) throws IOException, SocketException
-    {
-        String request = Util.joinArray(requests);
-        return this.request(host, request, timeout);
-    }
     public String request(String host, String request, int timeout) throws IOException, SocketException
     {
         this.socket.connect(host, timeout);
@@ -31,7 +26,7 @@ public class SocketRequest
         String result = "";
         try{
             this.socket.write(request);
-            result = this.socket.read();
+            result = this.socket.readAll();
         }catch(Exception e){
             e.printStackTrace();
         }finally{
@@ -40,14 +35,9 @@ public class SocketRequest
         return result;
     }
 
-    public void asyncRequest(String host, String[] requests, int timeout, String callback)  throws IOException, SocketException
-    {
-        String request = Util.joinArray(requests);
-        this.asyncRequest(host, request, timeout, callback);
-    }
-    public void asyncRequest(String host, String request, int timeout, String callback) throws IOException, SocketException
+    public void asyncRequest(String host, String request, int timeout, String lastCallback, String updateCallback) throws IOException, SocketException
     {
         this.socket.connect(host, timeout);
-        new SocketRequestThread(this, request, callback).start();
+        new SocketRequestThread(this, request, lastCallback, updateCallback).start();
     }
 }

@@ -73,6 +73,7 @@ var ffm = ffm||{};
     options.fail    = options.fail || (function(){});
     options.timeout = options.timeout || ffm.Config.defaultTimeout;
     options.request = options.request || "";
+
     if(typeof(options.request) !== "string"){
       var request = java.lang.reflect.Array.newInstance(java.lang.String, options.request.length);
       for(var i=0; i < options.request.length; i++){
@@ -80,6 +81,7 @@ var ffm = ffm||{};
       }
       options.request = request;
     }
+
     if(typeof(options.success) === "function"){
       var successTempName = "jsocket_temp_function_" + Math.floor(Math.random() * 1000000000).toString();
       window[successTempName] = function(result){
