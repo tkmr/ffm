@@ -21,20 +21,30 @@ public class TCPSocket implements ISocket
     {
         Socket basesocket = (Socket)rawsocket;
         TCPSocket socket = new TCPSocket(basesocket.getLocalPort());
-        socket.socket = basesocket;
-        socket.setIO();
+        try{
+            socket.socket = basesocket;
+            socket.setIO();
+        }catch(IOException e){
+            socket.close();
+            throw e;
+        }
         return (ISocket)socket;
     }
 
     public void connect(String host, int timeout) throws IOException, SocketException
     {
-        InetSocketAddress address = new InetSocketAddress(host, this.port);
-        this.socket.connect(address, timeout);
-        this.socket.setSoTimeout(timeout);
-        this.setIO();
+        try{
+            InetSocketAddress address = new InetSocketAddress(host, this.port);
+            this.socket.connect(address, timeout);
+            this.socket.setSoTimeout(timeout);
+            this.setIO();
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
     }
 
-    public void setIO() throws IOException
+    private void setIO() throws IOException
     {
         this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
         this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -42,22 +52,45 @@ public class TCPSocket implements ISocket
 
     public void close() throws IOException
     {
-        this.out.close();
-        this.in.close();
-        this.socket.close();
+        try{
+            if(this.out != null){
+                this.out.close();
+            }
+            if(this.in != null){
+                this.in.close();
+            }
+        }finally{
+            if(this.socket != null){
+                this.socket.close();
+            }
+        }
+    }
+
+    public boolean isClosed()
+    {
+        return this.socket.isClosed();
     }
 
     //Write //////////////////////////////////////////////////////////////////////////////////
     public void write(String[] requests) throws IOException
     {
-        String request = Util.joinArray(requests);
-        this.write(request);
+        try{
+            String request = Util.joinArray(requests);
+            this.write(request);
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
     }
     public void write(String request) throws IOException
     {
-        System.out.println(request);
-        this.out.write(request);
-        this.out.flush();
+        try{
+            this.out.write(request);
+            this.out.flush();
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
     }
 
     //Read //////////////////////////////////////////////////////////////////////////////////
@@ -65,27 +98,51 @@ public class TCPSocket implements ISocket
     {
         String result = "";
         String line;
-        while ((line = this.in.readLine()) != null) {
-            //result += line + "\uf8f8";
-            result += line + "\r\n";
+        try{
+            while ((line = this.in.readLine()) != null) {
+                //result += line + "\uf8f8";
+                result += line + "\r\n";
+            }
+        }catch(IOException e){
+            this.close();
+            throw e;
         }
         return result;
     }
 
     public String readLine() throws IOException
     {
-        return this.in.readLine();
+        String result;
+        try{
+            result = this.in.readLine();
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
+        return result;
     }
 
     public char read() throws IOException
     {
-        return (char)this.in.read();
+        char result;
+        try{
+            result = (char)this.in.read();
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
+        return result;
     }
 
     public String read(int length) throws IOException
     {
         char[] result = new char[length];
-        int size = this.in.read(result, 0, length);
+        try{
+            int size = this.in.read(result, 0, length);
+        }catch(IOException e){
+            this.close();
+            throw e;
+        }
         String results = new String(result);
         return results;
     }

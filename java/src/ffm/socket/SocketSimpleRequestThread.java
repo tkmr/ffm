@@ -5,7 +5,7 @@ import java.io.*;
 
 public class SocketSimpleRequestThread extends Thread{
     private String lastCallbackName;
-    private SocketRequest socket;
+    private SocketSimpleRequest socket;
 
     public SocketSimpleRequestThread(SocketRequest socket, String lastCallback){
         this.socket = socket;

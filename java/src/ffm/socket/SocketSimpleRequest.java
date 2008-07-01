@@ -3,7 +3,7 @@ import ffm.*;
 import java.net.*;
 import java.io.*;
 
-public class SocketRequest
+public class SocketSimpleRequest
 {
     public ICallback callback;
     public ISocket socket;
@@ -16,7 +16,7 @@ public class SocketRequest
         this.callback = callback;
     }
 
-    public String simpleRequest(String host, String request, int timeout) throws IOException, SocketException, Exception
+    public String request(String host, String request, int timeout) throws IOException, SocketException, Exception
     {
         String result = "";
         try{
@@ -30,7 +30,7 @@ public class SocketRequest
         return result;
     }
 
-    public void asyncSimpleRequest(String host, String request, int timeout, String lastCallback) throws IOException, SocketException, Exception
+    public void asyncRequest(String host, String request, int timeout, String lastCallback) throws IOException, SocketException, Exception
     {
         try{
             this.socket.connect(host, timeout);
@@ -40,16 +40,5 @@ public class SocketRequest
             throw e;
         }
         new SocketSimpleRequestThread(this, lastCallback).start();
-    }
-
-    public void asyncInteractRequest(String host, int timeout, String lastCallback, String updateCallback) throws IOException, SocketException, Exception
-    {
-        try{
-            this.socket.connect(host, timeout);
-        }catch(Exception e){
-            this.socket.close();
-            throw e;
-        }
-        new SocketInteractRequestThread(this, lastCallback, updateCallback).start();
     }
 }
