@@ -21,21 +21,10 @@ public class JSocketApplet extends Applet
         return new TCPSocket(port);
     }
 
-    public SocketRequest createSocketRequest(ISocket socket)
-    {
-        ICallback callback = new JSCallback("temp", (Applet)this);
-        return new SocketRequest(socket, callback);
-    }
-
     public void createSocketListenThread(int port, ISocket socket, String listenFunc, String threadFunc)
     {
-        ICallback listenCallback = new JSCallback(listenFunc, (Applet)this);
-        ICallback threadCallback = new JSCallback(threadFunc, (Applet)this);
+        ICallback<ISocket> listenCallback = new JSCallback<ISocket>(listenFunc, (Applet)this);
+        ICallback<int> threadCallback = new JSCallback<int>(threadFunc, (Applet)this);
         SocketListenThread.generate(port, socket, listenCallback, threadCallback).start();
-    }
-
-    public String echo(String req)
-    {
-        return req;
     }
 }

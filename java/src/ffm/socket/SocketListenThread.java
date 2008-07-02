@@ -6,11 +6,11 @@ import java.io.*;
 public class SocketListenThread extends Thread
 {
     private int port;
-    private ICallback listenCallback;
-    private ICallback threadCallback;
+    private ICallback<ISocket> listenCallback;
+    private ICallback<int> threadCallback;
     private ISocket socket;
 
-    public SocketListenThread(int port, ISocket socket, ICallback listenCallback, ICallback threadCallback)
+    public SocketListenThread(int port, ISocket socket, ICallback<ISocket> listenCallback, ICallback<int> threadCallback)
     {
         this.port = port;
         this.socket = socket;
@@ -24,7 +24,7 @@ public class SocketListenThread extends Thread
         int count = 0;
         try{
             serverSocket = new ServerSocket(this.port);
-            while(this.threadCallback.call(Integer.toString(count)) != "END"){
+            while(this.threadCallback.call(count) != null){
                 Socket basesocket = serverSocket.accept();
                 ISocket socket = this.socket.generate((Object)basesocket);
                 new SocketListenSubThread(socket, this.listenCallback).start();
@@ -41,7 +41,7 @@ public class SocketListenThread extends Thread
         }
     }
 
-    public static Thread generate(int port, ISocket socket, ICallback listenCallback, ICallback threadCallback)
+    public static Thread generate(int port, ISocket socket, ICallback<ISocket> listenCallback, ICallback<int> threadCallback)
     {
         SocketListenThread thread = new SocketListenThread(port, socket, listenCallback, threadCallback);
         return thread;

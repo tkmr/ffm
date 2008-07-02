@@ -9,4 +9,7 @@ module FFM
   module FFM::UPnP
     include_package "ffm.upnp"
   end
+  module FFM::Mock
+    include_package "ffm.mock"
+  end
 end

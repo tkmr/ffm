@@ -5,10 +5,10 @@ import java.io.*;
 
 public class SocketListener
 {
-    public ICallback callback;
+    public ICallback<ISocket> callback;
     public ISocket socket;
 
-    public SocketListener(ISocket socket, ICallback callback)
+    public SocketListener(ISocket socket, ICallback<ISocket> callback)
     {
         this.socket = socket;
         this.callback = callback;
@@ -17,8 +17,8 @@ public class SocketListener
     public void listen()
     {
         try{
-            String result = this.socket.read(this.callback);
-            System.out.println(result);
+            int count = 0;
+            String result = this.callback.call(this.socket, Integer.toString(count));
         } catch(IOException e){
             e.printStackTrace();
         } finally {

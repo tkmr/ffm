@@ -1,5 +1,4 @@
 package ffm;
-public interface ICallback{
-    String call(String result);
-    String call(String result, String key);
+public interface ICallback<T>{
+    String call(T args, String key);
 }

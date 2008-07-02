@@ -5,9 +5,9 @@ import java.io.*;
 
 public class SocketListenSubThread extends Thread
 {
-    private ICallback callback;
+    private ICallback<ISocket> callback;
     private ISocket socket;
-    public SocketListenSubThread(ISocket socket, ICallback callback)
+    public SocketListenSubThread(ISocket socket, ICallback<ISocket> callback)
     {
         this.socket = socket;
         this.callback = callback;
