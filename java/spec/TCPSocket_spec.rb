@@ -46,12 +46,12 @@ describe FFM::Socket::TCPSocket do
   it "should close socket when call close method" do
     socket = FFM::Socket::TCPSocket.new(80)
     socket.connect("www.google.com", 5000)
-    socket.close()
-    socket.isClosed().should eql true
+    socket.close
+    socket.isClosed.should eql true
 
     socket = FFM::Socket::TCPSocket.new(80)
-    socket.close();
-    socket.isClosed().should eql true
+    socket.close
+    socket.isClosed.should eql true
   end
 end
 

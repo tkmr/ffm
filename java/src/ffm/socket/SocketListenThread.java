@@ -7,12 +7,12 @@ public class SocketListenThread extends Thread
 {
     private int port;
     private ICallback<ISocket> listenCallback;
-    private ICallback<int> threadCallback;
+    private ICallback<Integer> threadCallback;
     private ISocket socket;
 
-    public SocketListenThread(int port, ISocket socket, ICallback<ISocket> listenCallback, ICallback<int> threadCallback)
+    public SocketListenThread(ISocket socket, ICallback<ISocket> listenCallback, ICallback<Integer> threadCallback)
     {
-        this.port = port;
+        this.port = socket.getPort();
         this.socket = socket;
         this.listenCallback = listenCallback;
         this.threadCallback = threadCallback;
@@ -39,11 +39,5 @@ public class SocketListenThread extends Thread
                 }
             } catch (IOException e) {}
         }
-    }
-
-    public static Thread generate(int port, ISocket socket, ICallback<ISocket> listenCallback, ICallback<int> threadCallback)
-    {
-        SocketListenThread thread = new SocketListenThread(port, socket, listenCallback, threadCallback);
-        return thread;
     }
 }

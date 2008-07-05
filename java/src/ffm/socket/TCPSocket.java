@@ -6,6 +6,7 @@ import java.util.regex.*;
 
 public class TCPSocket implements ISocket
 {
+    private final int defaultTimeout = 3000;
     public BufferedWriter out;
     public BufferedReader in;
     public int port;
@@ -31,6 +32,10 @@ public class TCPSocket implements ISocket
         return (ISocket)socket;
     }
 
+    public void connect(String host) throws IOException, SocketException
+    {
+        this.connect(host, defaultTimeout);
+    }
     public void connect(String host, int timeout) throws IOException, SocketException
     {
         try{
@@ -69,6 +74,11 @@ public class TCPSocket implements ISocket
     public boolean isClosed()
     {
         return this.socket.isClosed();
+    }
+
+    public int getPort()
+    {
+        return this.port;
     }
 
     //Write //////////////////////////////////////////////////////////////////////////////////

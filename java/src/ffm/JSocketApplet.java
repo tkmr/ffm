@@ -13,7 +13,8 @@ public class JSocketApplet extends Applet
 {
     public void init()
     {
-        System.setProperty("java.security.policy", "http://myhost.com:8888/test.policy");
+        String policyfile = getParameter("policy");
+        System.setProperty("java.security.policy", policyfile);
     }
 
     public TCPSocket createTCPSocket(int port)
@@ -21,10 +22,11 @@ public class JSocketApplet extends Applet
         return new TCPSocket(port);
     }
 
-    public void createSocketListenThread(int port, ISocket socket, String listenFunc, String threadFunc)
+    public SocketListenThread createSocketListenThread(ISocket socket, String listenFunc, String threadFunc)
     {
         ICallback<ISocket> listenCallback = new JSCallback<ISocket>(listenFunc, (Applet)this);
-        ICallback<int> threadCallback = new JSCallback<int>(threadFunc, (Applet)this);
-        SocketListenThread.generate(port, socket, listenCallback, threadCallback).start();
+        ICallback<Integer> threadCallback = new JSCallback<Integer>(threadFunc, (Applet)this);
+        SocketListenThread thread = new SocketListenThread(socket, listenCallback, threadCallback);
+        return thread;
     }
 }

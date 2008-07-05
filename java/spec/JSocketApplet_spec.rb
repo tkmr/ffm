@@ -7,23 +7,16 @@ describe FFM::JSocketApplet do
     @applet = FFM::JSocketApplet.new()
   end
 
-  it "echo method return a value which a input" do
-    @applet.echo("Hello world").should eql "Hello world"
-  end
-
-  it "createTCPSocket method return a ffm.socket.TCPSocket class instance" do
+  it "has createTCPSocket method, it return a ffm.socket.TCPSocket class instance" do
     socket = @applet.createTCPSocket(8888)
     socket.getClass().getName().should eql "ffm.socket.TCPSocket"
     socket.class.should eql FFM::Socket::TCPSocket
     socket.port.should eql 8888
   end
 
-  it "createSocketRequest method return a ffm.socket.SocketRequest class instance" do
+  it "has createSocketListenThread method, it return a ffm.socket.SocketListenThread class instance" do
     socket = @applet.createTCPSocket(8888)
-    request = @applet.createSocketRequest(socket)
-
-    request.class.should eql FFM::Socket::SocketRequest
-    request.socket.class.should eql FFM::Socket::TCPSocket
-    request.socket.port.should eql 8888
+    thread = @applet.createSocketListenThread(socket, "listenCallback", "threadCallback")
+    thread.getClass().getName().should eql "ffm.socket.SocketListenThread"
   end
 end
