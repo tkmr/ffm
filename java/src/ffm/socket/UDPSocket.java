@@ -2,22 +2,21 @@ package ffm.socket;
 import ffm.*;
 import java.net.*;
 import java.io.*;
-import java.util.regex.*;
 
-public class TCPSocket implements ISocket
+public class UDPSocket implements ISocket
 {
-    private final int defaultTimeout = 3000;
-    private BufferedWriter out;
-    private BufferedReader in;
+    private int defaultTimeout = 1000; //UDPSocket is not use..
     private int port;
     private Socket socket;
+    private String host;
 
-    public TCPSocket(int port)
+    public UDPSocket(int port)
     {
         this.port = port;
-        this.socket = new Socket();
+        this.socket = new DatagramSocket();
     }
 
+    /*
     public ISocket generate(Object rawsocket) throws IOException
     {
         Socket basesocket = (Socket)rawsocket;
@@ -31,6 +30,7 @@ public class TCPSocket implements ISocket
         }
         return (ISocket)socket;
     }
+    */
 
     public void connect(String host) throws IOException, SocketException
     {
@@ -38,36 +38,13 @@ public class TCPSocket implements ISocket
     }
     public void connect(String host, int timeout) throws IOException, SocketException
     {
-        try{
-            InetSocketAddress address = new InetSocketAddress(host, this.port);
-            this.socket.connect(address, timeout);
-            this.socket.setSoTimeout(timeout);
-            this.setIO();
-        }catch(IOException e){
-            this.close();
-            throw e;
-        }
-    }
-
-    private void setIO() throws IOException
-    {
-        this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-        this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        this.host = host;
     }
 
     public void close() throws IOException
     {
-        try{
-            if(this.out != null){
-                this.out.close();
-            }
-            if(this.in != null){
-                this.in.close();
-            }
-        }finally{
-            if(this.socket != null){
-                this.socket.close();
-            }
+        if(this.socket != null){
+            this.socket.close();
         }
     }
 
@@ -94,9 +71,10 @@ public class TCPSocket implements ISocket
     }
     public void write(String request) throws IOException
     {
+        byte buf[] = request.getBytes();
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(this.host), this.port);
         try{
-            this.out.write(request);
-            this.out.flush();
+            this.socket.send(packet);
         }catch(IOException e){
             this.close();
             throw e;

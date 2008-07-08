@@ -7,10 +7,10 @@ import java.util.regex.*;
 public class TCPSocket implements ISocket
 {
     private final int defaultTimeout = 3000;
-    private BufferedWriter out;
-    private BufferedReader in;
-    private int port;
-    private Socket socket;
+    public BufferedWriter out;
+    public BufferedReader in;
+    public int port;
+    public Socket socket;
 
     public TCPSocket(int port)
     {

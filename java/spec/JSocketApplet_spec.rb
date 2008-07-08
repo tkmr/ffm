@@ -16,7 +16,7 @@ describe FFM::JSocketApplet do
 
   it "has createSocketListenThread method, it return a ffm.socket.SocketListenThread class instance" do
     socket = @applet.createTCPSocket(8888)
-    thread = @applet.createSocketListenThread(socket, "listenCallback", "threadCallback")
+    thread = @applet.createSocketListenThread(socket, "listenCallback")
     thread.getClass().getName().should eql "ffm.socket.SocketListenThread"
   end
 end

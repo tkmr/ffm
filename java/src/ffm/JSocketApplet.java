@@ -22,11 +22,10 @@ public class JSocketApplet extends Applet
         return new TCPSocket(port);
     }
 
-    public SocketListenThread createSocketListenThread(ISocket socket, String listenFunc, String threadFunc)
+    public SocketListenThread createSocketListenThread(ISocket socket, String listenFunc)
     {
         ICallback<ISocket> listenCallback = new JSCallback<ISocket>(listenFunc, (Applet)this);
-        ICallback<Integer> threadCallback = new JSCallback<Integer>(threadFunc, (Applet)this);
-        SocketListenThread thread = new SocketListenThread(socket, listenCallback, threadCallback);
+        SocketListenThread thread = new SocketListenThread(socket, listenCallback);
         return thread;
     }
 }

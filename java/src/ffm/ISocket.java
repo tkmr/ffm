@@ -8,6 +8,7 @@ public interface ISocket{
     void write(String request) throws IOException;
     void write(String[] requests) throws IOException;
     void close() throws IOException;
+    boolean isClosed();
     ISocket generate(Object rawsocket) throws IOException;
     String readLine() throws IOException;
     String readAll() throws IOException;
