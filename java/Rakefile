@@ -1,6 +1,5 @@
 task :default => "lib/jssocket.jar"
 
-SIGN = "tatsuya"
 SRC = FileList["src/*.java", "src/ffm/*.java", "src/ffm/socket/*.java", "src/ffm/upnp/*.java", "src/ffm/js/*.java"]
 OBJ = FileList["classes/ffm/JSocketApplet.class",
                "classes/ffm/*.class",
@@ -17,11 +16,13 @@ rule '.class' => [proc {|tn| tn.sub(/\.class$/, '.java').sub(/^classes\//, 'src/
 end
 
 file "lib/jssocket.jar" => OBJ do |t|
+  print 'Please input your signer name: '
+  sign = gets
   sh "jar cf #{t.name} -C classes/ ."
-  sh "jarsigner #{t.name} #{SIGN}"
+  sh "jarsigner #{t.name} #{sign}"
 end
 
-task "spec" =>"lib/jssocket.jar" do
+task "spec" => "lib/jssocket.jar" do
   Dir::glob("spec/*.rb") do |f|
     sh "set CLASSPATH=./lib/jssocket.jar:$CLASSPATH;jruby -S spec #{f}"
   end
