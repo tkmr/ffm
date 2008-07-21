@@ -38,6 +38,28 @@ var ffm = ffm||{};
       }
       ffm.Temp.ID[id] = true;
       return id;
+    },
+    map: function(obj, func){
+      if(typeof(obj) === "object"){
+        for(var key in obj){
+          if(obj.hasOwnProperty(key)){
+            func(key, obj[key]);
+          }
+        }
+      }
+    },
+    merge: function(a, b, override){
+      if(typeof(a) === "object"){
+        var c = a;
+        this.map(b, function(key, value){
+            if(a[key] === undefined){
+              c[key] = value;
+            }else{
+              c[key] = override ? value : a[key];
+            }
+        });
+        return c;
+      }
     }
   }
 
@@ -51,8 +73,8 @@ var ffm = ffm||{};
 
   ffm.BaseSocket.prototype.init = function(applet){
     if(applet === null || typeof(applet) === "undefined"){
-      this.applet = document.applet;
-      //TODO load applet use DOM;
+      //TODO: refactor load applet use DOM;
+      this.applet = $.browser.safari ? window.applet : document.applet;
     }else{
       this.applet = applet;
     }

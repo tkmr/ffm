@@ -17,10 +17,20 @@ var ffm = ffm||{};
     var match = url.match(new RegExp("https?://([^/]*)(.*)"));
     var host = match[1].match(/([^:]*)(.*)/);
     var path = match[2] || "/";
-    options.request = [method+" "+path+" HTTP/1.1",
-                       "Host: "+host[1],
-                       "Connection: close",
-                       ""];
+    options.request = [method+" "+path+" HTTP/1.1"];
+
+    //Header
+    options.header = options.header || {};
+    options.header = ffm.Util.merge(options.header, {
+      Host: host[1],
+      Connection: "close"
+    });
+    ffm.Util.map(options.header, function(key, value){
+        options.request.push(key + ": " + value);
+    });
+    ffm.Util.debug(options.request);
+
+    options.request.push("");
     if(typeof(options.body) !== "undefined"){
       options.request.push(options.body);
     }
