@@ -28,7 +28,7 @@
     <div>
       <object id="applet" name="applet" codetype="application/java" type="application/x-java-applet" classid="java:ffm.JSocketApplet" width="300" height="200">
         <param NAME="cache_option" VALUE="false" />
-        <param NAME="cache_archive" VALUE="java/lib/plugin.jar, java/lib/jssocket.jar" />
+        <param NAME="archive" VALUE="java/lib/plugin.jar, java/lib/jssocket.jar" />
         <param NAME="cache_version" VALUE="0.0.0.2, 0.0.6.6" />
         <param name="codebase" value="." />
         <param name="type" value="application/x-java-applet;jpi-version=1.5.0" />
@@ -37,8 +37,6 @@
         <param name="policy" value="/test.policy" />
         No Way
       </object>
-      <iframe src="unittest_sub.html" id="subFrame" width="10" height="10">
-      </iframe>
     </div>
   </body>
 </html>

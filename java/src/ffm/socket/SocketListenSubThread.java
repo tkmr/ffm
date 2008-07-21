@@ -7,6 +7,7 @@ public class SocketListenSubThread extends Thread
 {
     private ICallback<ISocket> callback;
     private ISocket socket;
+    private int defaultCallbackInterval = 50;
 
     public SocketListenSubThread(ISocket socket, ICallback<ISocket> callback)
     {
@@ -17,7 +18,12 @@ public class SocketListenSubThread extends Thread
     public void run()
     {
         try{
-            String result = this.callback.call(this.socket);
+            String result;
+            while(!this.socket.isClosed()){
+                result = this.callback.call(this.socket);
+                sleep(defaultCallbackInterval);
+            }
+            System.out.println("socket was close");
         } catch(Exception e){
             e.printStackTrace();
         } finally {

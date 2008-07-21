@@ -19,4 +19,14 @@ describe FFM::JSocketApplet do
     thread = @applet.createSocketListenThread(socket, "listenCallback")
     thread.getClass().getName().should eql "ffm.socket.SocketListenThread"
   end
+
+  it "can close all thread" do
+    thread1 = @applet.createSocketListenThread(@applet.createTCPSocket(8891), "listenCallback")
+    thread2 = @applet.createSocketListenThread(@applet.createTCPSocket(8892), "listenCallback")
+    thread3 = @applet.createSocketListenThread(@applet.createTCPSocket(8893), "listenCallback")
+    @applet.close
+    thread1.isClosed.should eql true
+    thread2.isClosed.should eql true
+    thread3.isClosed.should eql true
+  end
 end

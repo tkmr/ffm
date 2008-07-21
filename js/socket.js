@@ -9,7 +9,10 @@ var ffm = ffm||{};
     defaultTimeout: 5000
   }
 
-  ffm.Temp = {};
+  ffm.Temp = {
+    ID: {},
+    Callback: {}
+  };
 
   ffm.Util = {
     debug: function(info){
@@ -27,6 +30,14 @@ var ffm = ffm||{};
     },
     F8F8toCRLF: function(req){
       return req.replace(/\uf8f8/g, "\n");
+    },
+    uniqueID: function(){
+      var id = Math.floor(Math.random() * 10000000).toString();
+      while(ffm.Temp.ID[id] !== undefined){
+        id = Math.floor(Math.random() * 10000000).toString();
+      }
+      ffm.Temp.ID[id] = true;
+      return id;
     }
   }
 
@@ -59,44 +70,52 @@ var ffm = ffm||{};
   }
 
   ffm.BaseSocket.prototype.write = function(request){
+    if(typeof(request) === "object"){
+      var req = java.lang.reflect.Array.newInstance(java.lang.String, request.length);
+      for(var i=0; i < request.length; i++){
+        req[i] = request[i];
+      }
+      request = req;
+    }
     this.socket.write(request);
   }
 
   ffm.BaseSocket.prototype.readAll = function(){
     return this.socket.readAll();
-    //return ffm.Util.F8F8toCRLF(result);
   }
 
   ffm.BaseSocket.prototype.readLine = function(){
     return this.socket.readLine();
-    //return ffm.Util.F8F8toCRLF(result);
   }
 
   ffm.BaseSocket.prototype.read = function(length){
-    return (length === undefined ? this.socket.read() : this.socket.read(length));
-    //return ffm.Util.F8F8toCRLF(result);
+    return (length === undefined ? String.fromCharCode(this.socket.read()) : this.socket.read(length));
+  }
+
+  ffm.BaseSocket.prototype.readyRead = function(){
+    return this.socket.readyRead();
   }
 
   ffm.BaseSocket.prototype.close = function(){
-    this.socket.close();
+    return this.socket.close();
   }
 
   ffm.BaseSocket.prototype.isClosed = function(){
-    this.socket.isClosed();
+    return this.socket.isClosed();
   }
 
   ffm.BaseSocket.prototype.getPort = function(){
-    this.socket.getPort();
+    return this.socket.getPort();
   }
 
   ///////////////////////////////////////////////////////////////////////
   /*
    * TCpSocket class
    */
-  ffm.TCPSocket = function(port, applet){
+  ffm.TCPSocket = function(port, applet, javaSocket){
     this.init(applet);
     this.port = port;
-    this.socket = this.applet.createTCPSocket(port);
+    this.socket = (javaSocket === undefined) ? this.applet.createTCPSocket(port) : javaSocket;
   }
   ffm.Util.extend(ffm.BaseSocket, ffm.TCPSocket);
 

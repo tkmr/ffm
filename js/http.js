@@ -19,19 +19,14 @@ var ffm = ffm||{};
     var path = match[2] || "/";
     options.request = [method+" "+path+" HTTP/1.1",
                        "Host: "+host[1],
-                       "User-Agent: Mozilla/5.0",
-                       "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                       "Accept-Language: ja,en-us;q=0.7,en;q=0.3",
-                       "Accept-Charset: utf-8;q=0.7,*;q=0.7",
                        "Connection: close",
-                       "", ""];
+                       ""];
     if(typeof(options.body) !== "undefined"){
       options.request.push(options.body);
     }
     var result = null;
     try{
       this.socket.connect(host[1], options.timeout, function(socket){
-          console.log(options);
           socket.write(options.request);
           result = socket.readAll();
       });
@@ -69,20 +64,25 @@ var ffm = ffm||{};
    * HTTP response
    */
   ffm.HTTP.Response = function(result){
-    console.log(result);
-    var matches = result.match(/([^]*)(\n\n|\r\n\r\n)([^]*)/);
-    if(matches === null){
-      this.body = result;
-    }else{
-      var headers = matches[1].split("\n");
-      this.header = {};
-      for(var i in headers){
-        var ht = headers[i].split(": ");
-        this.header[ht[0]] = ht[1]
+    var results = result.split(/\r\n|\n/);
+    var endHeader = false;
+    this.header = {};
+    this.header.status = results.shift();
+    this.status = this.header.status.match(new RegExp("HTTP/1.1 (.*) "))[1];
+    var body = "";
+
+    var i = results.shift();
+    while(i !== undefined){
+      if(i===""){ endHeader = true; }
+      if(!endHeader){
+        var tmp = i.match(/^([^:]*): (.*)$/);
+        this.header[tmp[1]] = tmp[2];
+      }else{
+        body += i + "\n";
       }
-      this.status = matches[1].match(new RegExp("HTTP/1.1 (.*) "));
-      this.body = matches[2];
+      i = results.shift();
     }
+    this.body =  body;
   }
 
 })(ffm);

@@ -95,6 +95,7 @@ public class TCPSocket implements ISocket
     public void write(String request) throws IOException
     {
         try{
+            System.out.println(request);
             this.out.write(request);
             this.out.flush();
         }catch(IOException e){
@@ -155,5 +156,10 @@ public class TCPSocket implements ISocket
         }
         String results = new String(result);
         return results;
+    }
+
+    public boolean readyRead() throws IOException
+    {
+        return this.in.ready();
     }
 }

@@ -15,6 +15,7 @@ public class JSCallback<T> implements ICallback<T>{
     }
 
     public String call(T request){
+        System.out.println(this.jsfunc);
         JSObject win = JSObject.getWindow(this.applet);
         Object[] arg = new Object[1];
         arg[0] = request;

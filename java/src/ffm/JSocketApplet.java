@@ -8,13 +8,30 @@ import java.applet.*;
 import ffm.*;
 import ffm.js.*;
 import ffm.socket.*;
+import java.util.ArrayList;
 
 public class JSocketApplet extends Applet
 {
+    private ArrayList<SocketListenThread> socketlistenthreads = new ArrayList<SocketListenThread>();
     public void init()
     {
         String policyfile = getParameter("policy");
         System.setProperty("java.security.policy", policyfile);
+    }
+
+    public void stop()
+    {
+        this.close();
+    }
+    public void destroy()
+    {
+        this.close();
+    }
+    public void close()
+    {
+        for(SocketListenThread thread : this.socketlistenthreads){
+            thread.close();
+        }
     }
 
     public TCPSocket createTCPSocket(int port)
@@ -26,6 +43,7 @@ public class JSocketApplet extends Applet
     {
         ICallback<ISocket> listenCallback = new JSCallback<ISocket>(listenFunc, (Applet)this);
         SocketListenThread thread = new SocketListenThread(socket, listenCallback);
+        this.socketlistenthreads.add(thread);
         return thread;
     }
 }

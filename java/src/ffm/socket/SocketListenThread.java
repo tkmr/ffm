@@ -75,4 +75,10 @@ public class SocketListenThread extends Thread
     {
         return this.subThreads;
     }
+
+    protected void finalize() throws Throwable
+    {
+        this.close();
+        super.finalize();
+    }
 }

@@ -1,0 +1,33 @@
+$(document).ready(function(){
+    var port = 20000;
+
+    var connect_server = function(proc){
+      var socket = new ffm.TCPSocket(port);
+      socket.connect("localhost");
+      proc(socket);
+      socket.close();
+      ok(socket.isClosed());
+    }
+
+    test("ffm.SocketListener can accept TCP request", function(){
+        var server = new ffm.SocketListenre(new ffm.TCPSocket(port), function(subSocket){
+            var req = subSocket.readLine();
+            subSocket.write("Request is :" + req + "\r\n");
+        });
+        server.start();
+
+        //Request start
+        connect_server(function(socket){
+            socket.write("hello world\r\n");
+            equals(socket.readLine(), "Request is :hello world");
+        });
+        connect_server(function(socket){
+            socket.write("hello byte\r\n");
+            equals(socket.read(22), "Request is :hello byte");
+        });
+
+        server.close();
+        server.join();
+        ok(server.isClosed());
+    });
+});

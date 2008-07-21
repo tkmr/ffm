@@ -53,6 +53,10 @@ describe FFM::Socket::TCPSocket do
     socket.close
     socket.isClosed.should eql true
   end
+
+  it "should return true when ready of read" do
+    false.should.eql true
+  end
 end
 
 def connect_google
