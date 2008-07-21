@@ -31,6 +31,7 @@ public class MockCallback<T> implements ICallback<T>{
         try{
             request = socket.readLine();
             socket.write("request is " + request + "\r\n");
+            socket.close();
         }catch(IOException e){
             System.out.println(e.toString());
         }

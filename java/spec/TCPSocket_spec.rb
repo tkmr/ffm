@@ -55,7 +55,17 @@ describe FFM::Socket::TCPSocket do
   end
 
   it "should return true when ready of read" do
-    false.should.eql true
+    socket = FFM::Socket::TCPSocket.new(80)
+    socket.connect("www.google.com", 5000)
+    socket.readyRead.should eql false
+
+    socket.write("GET /webhp HTTP/1.1\r\nHost: www.google.com\r\nConnection: close\r\n\r\n")
+    sleep(1)
+    socket.readyRead.should eql true
+    socket.readLine.should eql "HTTP/1.1 200 OK"
+
+    socket.close
+    socket.isClosed.should eql true
   end
 end
 

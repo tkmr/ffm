@@ -53,10 +53,6 @@ describe FFM::Socket::SocketListenThread do
     end
   end
 
-  it "wait some time in SocketListenSubThread" do
-    false.should eql true
-  end
-
   def connect_server
     socket = FFM::Socket::TCPSocket.new(@port)
     socket.connect("localhost")
