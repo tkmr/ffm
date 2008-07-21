@@ -70,4 +70,8 @@ $(document).ready(function(){
         socket2.close();
         ok(socket2.isClosed(), "success close a socket");
     });
+
+    test("ffm.TCPSocket.read can async get", function(){
+        ok(false, "not implement");
+    });
 });
