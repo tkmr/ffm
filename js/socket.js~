@@ -74,9 +74,7 @@ var ffm = ffm||{};
   ffm.BaseSocket.prototype.init = function(applet){
     if(applet === null || typeof(applet) === "undefined"){
       //TODO: refactor load applet use DOM;
-      this.applet = $.browser.safari ? window.applet
-                  : $.browser.opera ? document.getElementById("applet")
-                  : document.applet;
+      this.applet = $.browser.safari ? window.applet : document.applet;
     }else{
       this.applet = applet;
     }

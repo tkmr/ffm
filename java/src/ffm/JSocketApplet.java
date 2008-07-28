@@ -15,8 +15,19 @@ public class JSocketApplet extends Applet
     private ArrayList<SocketListenThread> socketlistenthreads = new ArrayList<SocketListenThread>();
     public void init()
     {
-        String policyfile = getParameter("policy");
+        System.out.println("start!!");
+        //String policyfile = getParameter("policy");
+        String policyfile = "http://myhost.com:8888/test.policy";
+        System.out.println(policyfile);
         System.setProperty("java.security.policy", policyfile);
+        System.setSecurityManager( new SecurityManager());
+        System.out.println("setup end");
+    }
+
+    public void paint(Graphics g){
+        Dimension size = getSize();
+        g.setColor(Color.blue);
+        g.fillRect(0, 0, size.width - 1, size.height - 1);
     }
 
     public void stop()

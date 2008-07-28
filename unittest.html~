@@ -26,10 +26,10 @@
     <div id="main">
     </div>
     <div>
-      <script type="text/javascript" src="/applettest.js"></script>
       <!--
-      <object id="applet" name="applet" codetype="application/java" type="application/x-java-applet" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="300" height="200">
-        <param NAME="code" VALUE="ffm.JSocketApplet.class" />
+      <script type="text/javascript" src="/applettest.js"></script>
+      -->
+      <object id="applet" name="applet" codetype="application/java" type="application/x-java-applet" classid="java:ffm.JSocketApplet" width="300" height="200">
         <param NAME="cache_option" VALUE="false" />
         <param NAME="cache_archive" VALUE="java/lib/plugin.jar, java/lib/jssocket.jar" />
         <param NAME="cache_version" VALUE="0.0.0.2, 0.0.6.9" />
@@ -40,7 +40,6 @@
         <param name="policy" value="/test.policy" />
         No Way
       </object>
-      -->
     </div>
   </body>
 </html>
